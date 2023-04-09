@@ -1,5 +1,6 @@
 import turtle
 import gen_puzzle
+import time
 
 class SudokuGame:
     def __init__(self):
@@ -24,6 +25,7 @@ class SudokuGame:
 
         self.board_size = 450
         self.cell_size = self.board_size / 9
+        self.start_time = 0
 
         self.pen = turtle.Turtle()
 
@@ -131,7 +133,7 @@ class SudokuGame:
 
             key = row * 9 + col
             if value is not None and not self.generated[key]:
-                self.board[row][col] = value
+                self.board[row][col] = int(value)
                 y = left_up -  row * self.cell_size - self.cell_size * 3 / 4
                 x = left_min + col * self.cell_size + self.cell_size / 2
 
@@ -146,10 +148,13 @@ class SudokuGame:
                 self.turtles[key] = t
 
                 if self.is_board_full():
-                    t.hideturtle()
                     t = turtle.Turtle()
+                    end_time = time.time()
+                    duration = end_time - self.start_time
+                    print(end_time, duration)
                     t.color("red")
-                    t.write("Congratulations! You solved the Sudoku puzzle!", align="center", font=("Arial", 20, "normal"))
+                    t.write("Congratulations! You solved the Sudoku puzzle in %.1fs!" % (duration), align="center", font=("Arial", 15, "normal"))
+                    t.hideturtle()
             
 
     def is_board_full(self):
@@ -196,6 +201,8 @@ class SudokuGame:
         # 绘制棋盘
         self.draw_board()
 
+        self.start_time = time.time()
+        print(self.start_time)
         # 注册点击事件处理函数
         turtle.onscreenclick(self.handle_click)
 

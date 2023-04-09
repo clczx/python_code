@@ -17,7 +17,7 @@ def gen_puzz():
     ]
     # 根据难度设置空白格数量
     if difficulty == "easy":
-        blank_count = 30
+        blank_count = 5
     elif difficulty == "medium":
         blank_count = 40
     elif difficulty == "hard":
